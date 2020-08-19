@@ -1,0 +1,73 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/page_bg"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_margin"
+        android:paddingRight="@dimen/activity_margin" >
+
+        <TextView
+            android:id="@+id/tv_alarm"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/menu_item"
+            android:background="@drawable/page_item_bg"
+            android:drawableRight="@drawable/ic_right"
+            android:gravity="center_vertical"
+            android:text="@string/alarm"
+            android:textColor="@color/COLOR_3"
+            android:textSize="@dimen/Title_4" />
+
+        <include layout="@layout/divider_line" />
+
+        <TextView
+            android:id="@+id/tv_timer"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/menu_item"
+            android:background="@drawable/page_item_bg"
+            android:drawableRight="@drawable/ic_right"
+            android:gravity="center_vertical"
+            android:text="@string/sa_timer_on"
+            android:textColor="@color/COLOR_3"
+            android:textSize="@dimen/Title_4" />
+
+        <include layout="@layout/divider_line" />
+
+        <TextView
+            android:id="@+id/tv_centerkey"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/menu_item"
+            android:background="@drawable/page_item_bg"
+            android:drawableRight="@drawable/ic_right"
+            android:gravity="center_vertical"
+            android:text="@string/sa_center_set"
+            android:textColor="@color/COLOR_3"
+            android:textSize="@dimen/Title_4" />
+
+        <include layout="@layout/divider_line" />
+
+        <Button
+            android:id="@+id/btn_restore"
+            style="@style/common_bt"
+            android:layout_height="@dimen/btn_height"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/factory_reset"
+            android:textSize="@dimen/Title_2" 
+            android:visibility="invisible"
+            />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/mask"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_50"
+        android:clickable="true" />
+
+</FrameLayout>
