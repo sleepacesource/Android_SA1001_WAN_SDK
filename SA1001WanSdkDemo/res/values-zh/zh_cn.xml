@@ -235,6 +235,7 @@
   <string name="unbind">解绑设备</string>
   <string name="complete">请填写完整</string>
   <string name="confirm_correctly">连接服务器失败，请确认信息是否输入正确</string>
+  <string name="query_online_state">查询设备在线状态</string>
   
   <string name="only_once">仅一次</string>
   <string-array name="arr_week"> 

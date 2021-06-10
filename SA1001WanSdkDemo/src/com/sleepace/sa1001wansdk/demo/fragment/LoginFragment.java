@@ -6,13 +6,16 @@ import java.util.List;
 import com.sleepace.sa1001wansdk.demo.MainActivity;
 import com.sleepace.sa1001wansdk.demo.R;
 import com.sleepace.sa1001wansdk.demo.util.ActivityUtil;
+import com.sleepace.sdk.core.light.domain.SPTimeInfo;
 import com.sleepace.sdk.core.light.domain.UpgradeStatus;
 import com.sleepace.sdk.interfs.IDeviceManager;
 import com.sleepace.sdk.interfs.IResultCallback;
 import com.sleepace.sdk.manager.CallbackData;
 import com.sleepace.sdk.manager.DeviceType;
 import com.sleepace.sdk.sa1001_wan.SA1001Helper;
+import com.sleepace.sdk.sa1001_wan.domain.SleepAidConfig;
 import com.sleepace.sdk.util.SdkLog;
+import com.sleepace.sdk.util.TimeUtil;
 import com.sleepace.sdk.wifidevice.WiFiDeviceSdkHelper;
 import com.sleepace.sdk.wifidevice.bean.DeviceInfo;
 import com.sleepace.sdk.wifidevice.bean.UpgradeInfo;
@@ -31,13 +34,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class LoginFragment extends BaseFragment {
-	private Button btnConnect, btnUpgrade, btnBindDevice, btnUnbindDevice;
+	private Button btnConnect, btnUpgrade, btnBindDevice, btnUnbindDevice, btnQueryOnlineState;
 	private EditText etServerAddress, etToken, etChannelId, etDeviceId, etVersion;
 	private WiFiDeviceSdkHelper wifiDeviceSdkHelper;
 	private SA1001Helper mHelper;
 	private ProgressDialog progressDialog;
 	private ProgressDialog upgradeDialog;
 	private SharedPreferences mSetting;
+	
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,6 +64,7 @@ public class LoginFragment extends BaseFragment {
 		btnUpgrade = (Button) root.findViewById(R.id.btn_upgrade_device);
 		btnBindDevice = (Button) root.findViewById(R.id.btn_bind_device);
 		btnUnbindDevice = (Button) root.findViewById(R.id.btn_unbind_device);
+		btnQueryOnlineState = (Button) root.findViewById(R.id.btn_query_online_state);
 		etServerAddress = (EditText) root.findViewById(R.id.et_server_address);
 		etToken = (EditText) root.findViewById(R.id.et_token);
 		etChannelId = (EditText) root.findViewById(R.id.et_channel_id);
@@ -74,6 +79,7 @@ public class LoginFragment extends BaseFragment {
 		btnConnect.setOnClickListener(this);
 		btnBindDevice.setOnClickListener(this);
 		btnUnbindDevice.setOnClickListener(this);
+		btnQueryOnlineState.setOnClickListener(this);
 	}
 
 	protected void initUI() {
@@ -98,16 +104,16 @@ public class LoginFragment extends BaseFragment {
 		super.onResume();
 //		String serverHost = mSetting.getString("serverHost", "http://120.24.169.204:8091");
 //		String serverHost = mSetting.getString("serverHost", "http://172.14.0.65:8082");
-		String serverHost = mSetting.getString("serverHost", "");
+		String serverHost = mSetting.getString("serverHost", "http://120.24.68.136:8091");
 		etServerAddress.setText(serverHost);
 //		String token = mSetting.getString("token", "wangyong");
-		String token = mSetting.getString("token", "");
+		String token = mSetting.getString("token", "FB75448FC0F3BE95C63FDAC5B1F9A70");
 		etToken.setText(token);
 //		String channelId = mSetting.getString("channelId", "13700");
-		String channelId = mSetting.getString("channelId", "");
+		String channelId = mSetting.getString("channelId", "56910");
 		etChannelId.setText(channelId);
-//		String deviceId = mSetting.getString("deviceId", MainActivity.deviceId);
-//		etDeviceId.setText(deviceId);
+		String deviceId = mSetting.getString("deviceId", "r9svdm05rgboi");
+		etDeviceId.setText(deviceId);
 //		String version = mSetting.getString("version", "1.57");
 //		String version = mSetting.getString("version", "");
 //		etVersion.setText(version);
@@ -202,6 +208,18 @@ public class LoginFragment extends BaseFragment {
 				return;
 			}
 			checkUpdate(deviceId);
+			
+			SPTimeInfo time = new SPTimeInfo();
+			time.setTimestamp((int) (System.currentTimeMillis() / 1000));
+			time.setTimezone(TimeUtil.getTimeZoneSecond());
+			time.setTimeStyle((byte) 24); //12小时制，24小时制
+			mHelper.syncTime(deviceId, time, new IResultCallback() {
+				@Override
+				public void onResultCallback(CallbackData cd) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
 		} else if (v == btnBindDevice) {
 			progressDialog.show();
 			final String deviceId = etDeviceId.getText().toString().trim();
@@ -257,6 +275,26 @@ public class LoginFragment extends BaseFragment {
 					}
 				}
 			});
+		}else if(v == btnQueryOnlineState) {
+			String deviceId = etDeviceId.getText().toString().trim();
+			if(MainActivity.device != null) {
+				mHelper.queryDeviceOnlineState((short)MainActivity.device.getDeviceType(), deviceId, new IResultCallback<Byte>() {
+					@Override
+					public void onResultCallback(CallbackData<Byte> cd) {
+						// TODO Auto-generated method stub
+						SdkLog.log(TAG + " queryDeviceOnlineState cd:" + cd);
+					}
+				});
+			}
+			
+//			SleepAidConfig config = new SleepAidConfig();
+//			mHelper.sleepSceneConfigSet(deviceId, DeviceType.DEVICE_TYPE_P200A.getType(), "aabbccaabbcc1", config, new IResultCallback() {
+//				@Override
+//				public void onResultCallback(CallbackData cd) {
+//					// TODO Auto-generated method stub
+//					SdkLog.log(TAG + " sleepSceneConfigSet cd:" + cd);
+//				}
+//			});
 		}
 	}
 	
@@ -283,7 +321,7 @@ public class LoginFragment extends BaseFragment {
 									float deviceVersion = device.getDeviceVersion();
 									String ext = device.getExt();
 									DeviceType dType = DeviceType.getDeviceType(deviceType);
-									if(DeviceType.isNoxSAW(dType)) {
+									if(DeviceType.isNoxSAW(dType) || DeviceType.isZ4TWP(dType) || DeviceType.isZ400TWP2(dType)) {
 										MainActivity.device = device;
 										etDeviceId.setText(deviceId);
 										etVersion.setText(String.valueOf(deviceVersion));

@@ -179,7 +179,7 @@ public class LightFragment extends BaseFragment {
 		
 		setPageEnable(true);
 		initBtnState(mainActivity.getWorkStatus());
-		if(mainActivity.getWorkStatus() == null) {
+//		if(mainActivity.getWorkStatus() == null) {
 			if(MainActivity.device != null) {
 				mHelper.queryWorkStatus(MainActivity.device.getDeviceId(), new IResultCallback<WorkStatus>() {
 					@Override
@@ -194,7 +194,7 @@ public class LightFragment extends BaseFragment {
 					}
 				});
 			}
-		}
+//		}
 	}
 	
 	@Override

@@ -236,6 +236,7 @@
     <string name="unbind">Unbind</string>
     <string name="complete">Please Complete</string>
     <string name="confirm_correctly">Failed to connect to the server, please confirm whether the information is entered correctly</string>
+    <string name="query_online_state">Query Online State</string>
 
     <string name="only_once">Only Once</string>
     <string-array name="arr_week"> 
