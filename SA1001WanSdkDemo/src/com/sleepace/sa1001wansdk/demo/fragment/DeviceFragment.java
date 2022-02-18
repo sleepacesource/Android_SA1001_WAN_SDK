@@ -74,8 +74,8 @@ public class DeviceFragment extends BaseFragment {
 		// TODO Auto-generated method stub
 		mActivity.setTitle(R.string.device);
 //		tvDeviceName.setText(MainActivity.deviceName);
-//		tvDeviceId.setText(MainActivity.deviceId);
-//		tvVersion.setText(MainActivity.version);
+		tvDeviceId.setText("ncew4y78xcg21");
+		tvVersion.setText("1.63");
 	}
 	
 	@Override
@@ -91,8 +91,8 @@ public class DeviceFragment extends BaseFragment {
 		setPageEnable(isConnected);
 		if(!isConnected) {
 			tvDeviceName.setText(null);
-			tvDeviceId.setText(null);
-			tvVersion.setText(null);
+//			tvDeviceId.setText(null);
+//			tvVersion.setText(null);
 		}
 	}
 	

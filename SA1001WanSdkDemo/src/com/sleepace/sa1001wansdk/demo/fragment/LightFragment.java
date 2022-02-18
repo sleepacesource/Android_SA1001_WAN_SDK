@@ -80,7 +80,7 @@ public class LightFragment extends BaseFragment {
 		@Override
 		public void onWorkStatusChanged(LightWorkStatus workStatus) {
 			// TODO Auto-generated method stub
-			SdkLog.log(TAG+" onWorkStatusChanged:" + workStatus);
+//			SdkLog.log(TAG+" onWorkStatusChanged:" + workStatus);
 			initBtnState((WorkStatus)workStatus);
 		}
 	};
@@ -180,6 +180,7 @@ public class LightFragment extends BaseFragment {
 		setPageEnable(true);
 		initBtnState(mainActivity.getWorkStatus());
 //		if(mainActivity.getWorkStatus() == null) {
+		SdkLog.log(TAG+" queryWorkStatus device:" + MainActivity.device);
 			if(MainActivity.device != null) {
 				mHelper.queryWorkStatus(MainActivity.device.getDeviceId(), new IResultCallback<WorkStatus>() {
 					@Override

@@ -149,7 +149,7 @@ public class MainActivity extends BaseActivity {
 		@Override
 		public void onWorkStatusChanged(LightWorkStatus workStatus) {
 			// TODO Auto-generated method stub
-//			SdkLog.log(TAG+" onWorkStatusChanged:" + workStatus);
+			SdkLog.log(TAG+" onWorkStatusChanged:" + workStatus);
 			MainActivity.this.workStatus = (WorkStatus) workStatus;
 		}
 	};

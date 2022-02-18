@@ -107,16 +107,16 @@ public class LoginFragment extends BaseFragment {
 		String serverHost = mSetting.getString("serverHost", "http://120.24.68.136:8091");
 		etServerAddress.setText(serverHost);
 //		String token = mSetting.getString("token", "wangyong");
-		String token = mSetting.getString("token", "FB75448FC0F3BE95C63FDAC5B1F9A70");
+		String token = mSetting.getString("token", "JEyze7l6jpr4");
 		etToken.setText(token);
 //		String channelId = mSetting.getString("channelId", "13700");
-		String channelId = mSetting.getString("channelId", "56910");
+		String channelId = mSetting.getString("channelId", "54500");
 		etChannelId.setText(channelId);
-		String deviceId = mSetting.getString("deviceId", "r9svdm05rgboi");
+		String deviceId = mSetting.getString("deviceId", "ncew4y78xcg21"); //SA11166000005
 		etDeviceId.setText(deviceId);
-//		String version = mSetting.getString("version", "1.57");
+		String version = mSetting.getString("version", "1.63");
 //		String version = mSetting.getString("version", "");
-//		etVersion.setText(version);
+		etVersion.setText(version);
 	}
 
 	@Override

@@ -64,7 +64,7 @@ public class AromaFragment extends BaseFragment {
 		@Override
 		public void onWorkStatusChanged(LightWorkStatus workStatus) {
 			// TODO Auto-generated method stub
-			SdkLog.log(TAG+" onWorkStatusChanged:" + workStatus);
+//			SdkLog.log(TAG+" onWorkStatusChanged:" + workStatus);
 			initBtnState((WorkStatus)workStatus);
 		}
 	};
@@ -120,7 +120,7 @@ public class AromaFragment extends BaseFragment {
 
 	protected void initUI() {
 		// TODO Auto-generated method stub
-		if(mainActivity.getWorkStatus() == null) {
+		if(mainActivity.getWorkStatus() == null || true) {
 			if(MainActivity.device != null) {
 				mHelper.queryWorkStatus(MainActivity.device.getDeviceId(), new IResultCallback<WorkStatus>() {
 					@Override
