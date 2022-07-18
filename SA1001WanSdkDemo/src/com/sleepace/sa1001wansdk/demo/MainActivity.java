@@ -139,9 +139,9 @@ public class MainActivity extends BaseActivity {
 	
 	private OnlineStateListener onlineStateListener = new OnlineStateListener() {
 		@Override
-		public void onlineStateChanged(byte onlineState) {
+		public void onlineStateChanged(String deviceId, byte onlineState) {
 			// TODO Auto-generated method stub
-			SdkLog.log(TAG+" onlineStateChanged:" + onlineState);
+			SdkLog.log(TAG+" onlineStateChanged deviceId:" + deviceId+",onlineState:" + onlineState);
 		}
 	};
 	
