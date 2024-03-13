@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.sleepace.sa1001wansdk.demo.util.ActivityUtil;
 import com.sleepace.sa1001wansdk.demo.util.Utils;
-import com.sleepace.sdk.core.light.domain.AlarmInfo;
 import com.sleepace.sdk.interfs.IResultCallback;
 import com.sleepace.sdk.manager.CallbackData;
 import com.sleepace.sdk.manager.ble.BleHelper;
@@ -128,7 +127,7 @@ public class AlarmListActivity extends BaseActivity {
 	private OnItemClickListener onItemClickListener = new OnItemClickListener() {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			AlarmInfo alarm = adapter.getItem(position);
+			AromaAlarm alarm = adapter.getItem(position);
 			Intent intent = new Intent(mActivity, EditAlarmActivity.class);
 			intent.putExtra("action", "edit");
 			intent.putExtra("alarm", alarm);

@@ -7,6 +7,7 @@ import com.sleepace.sa1001wansdk.demo.view.SelectTimeDialog.TimeSelectedListener
 import com.sleepace.sdk.interfs.IMonitorManager;
 import com.sleepace.sdk.interfs.IResultCallback;
 import com.sleepace.sdk.manager.CallbackData;
+import com.sleepace.sdk.sa1001_wan.CallbackType;
 import com.sleepace.sdk.sa1001_wan.domain.AromaAlarm;
 import com.sleepace.sdk.util.SdkLog;
 
@@ -140,7 +141,7 @@ public class AlarmSettingActivity extends BaseActivity {
     			public void onResultCallback(CallbackData<Void> cd) {
     				// TODO Auto-generated method stub
     				SdkLog.log(TAG+" onResultCallback " + cd);
-    				if(cd.getCallbackType() == IMonitorManager.METHOD_ALARM_SET) {
+    				if(cd.getCallbackType() == CallbackType.ALARM_UPDATE) {
     					if(cd.isSuccess()) {
     						finish();
     					}else {

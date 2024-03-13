@@ -5,13 +5,11 @@ import com.sleepace.sa1001wansdk.demo.MainActivity;
 import com.sleepace.sa1001wansdk.demo.R;
 import com.sleepace.sa1001wansdk.demo.util.ActivityUtil;
 import com.sleepace.sa1001wansdk.demo.util.Utils;
-import com.sleepace.sdk.core.light.domain.LightWorkStatus;
-import com.sleepace.sdk.core.light.domain.SPLight;
-import com.sleepace.sdk.core.light.interfs.WorkStatusListener;
-import com.sleepace.sdk.interfs.IMonitorManager;
 import com.sleepace.sdk.interfs.IResultCallback;
 import com.sleepace.sdk.manager.CallbackData;
+import com.sleepace.sdk.sa1001_wan.domain.SPLight;
 import com.sleepace.sdk.sa1001_wan.domain.WorkStatus;
+import com.sleepace.sdk.sa1001_wan.interfs.WorkStatusListener;
 import com.sleepace.sdk.util.SdkLog;
 
 import android.os.Bundle;
@@ -23,8 +21,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -78,14 +74,14 @@ public class LightFragment extends BaseFragment {
 	
 	private WorkStatusListener workStatusListener = new WorkStatusListener() {
 		@Override
-		public void onWorkStatusChanged(LightWorkStatus workStatus) {
+		public void onWorkStatusChanged(WorkStatus workStatus) {
 			// TODO Auto-generated method stub
 //			SdkLog.log(TAG+" onWorkStatusChanged:" + workStatus);
 			initBtnState((WorkStatus)workStatus);
 		}
 	};
 	
-	private void initBtnState(final LightWorkStatus workStatus) {
+	private void initBtnState(final WorkStatus workStatus) {
 		boolean lightStatus = workStatus != null && workStatus.getLightStatus() == 1;
 		initBtnState(lightStatus);
 	}
@@ -224,56 +220,6 @@ public class LightFragment extends BaseFragment {
 			maskView.setVisibility(View.VISIBLE);
 		}
 	}
-	
-	private OnCheckedChangeListener checkedChangeListener = new OnCheckedChangeListener() {
-		@Override
-		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-			// TODO Auto-generated method stub
-//			AlarmSettingActivity.alarmConfig.setEnable(isChecked);
-//			getBinatoneHelper().setAlarm(AlarmSettingActivity.alarmConfig.isEnable(), AlarmSettingActivity.alarmConfig.getHour(), AlarmSettingActivity.alarmConfig.getMinute(), AlarmSettingActivity.alarmConfig.getDuration(), 3000, setAlarmCallback);
-		}
-	};
-	
-	private IResultCallback<Void> setAlarmCallback = new IResultCallback<Void>() {
-		@Override
-		public void onResultCallback(CallbackData<Void> cd) {
-			// TODO Auto-generated method stub
-			SdkLog.log(TAG+" onResultCallback " + cd);
-			if(cd.getCallbackType() == IMonitorManager.METHOD_ALARM_SET) {
-				if(cd.isSuccess()) {
-					
-				}else {
-					
-				}
-			}
-		}
-	};
-	
-//	private IResultCallback<AlarmConfig> getAlarmCallback = new IResultCallback<AlarmConfig>() {
-//		@Override
-//		public void onResultCallback(CallbackData<AlarmConfig> cd) {
-//			// TODO Auto-generated method stub
-//			if(!isAdded()) {
-//				return;
-//			}
-//			SdkLog.log(TAG+" onResultCallback " + cd);
-//			if(cd.getCallbackType() == IMonitorManager.METHOD_ALARM_GET) {
-//				if(cd.isSuccess()) {
-//					AlarmSettingActivity.alarmConfig = cd.getResult();
-//					mActivity.runOnUiThread(new Runnable() {
-//						@Override
-//						public void run() {
-//							// TODO Auto-generated method stub
-//							cbAlarmSwitch.setChecked(AlarmSettingActivity.alarmConfig.isEnable());
-//						}
-//					});
-//				}else {
-//					
-//				}
-//			}
-//		}
-//	};
-	
 
 	@Override
 	public void onDestroyView() {

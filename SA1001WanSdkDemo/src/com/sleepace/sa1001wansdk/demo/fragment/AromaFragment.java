@@ -2,14 +2,12 @@ package com.sleepace.sa1001wansdk.demo.fragment;
 
 import com.sleepace.sa1001wansdk.demo.MainActivity;
 import com.sleepace.sa1001wansdk.demo.R;
-import com.sleepace.sdk.core.light.domain.LightWorkStatus;
-import com.sleepace.sdk.core.light.interfs.WorkStatusListener;
 import com.sleepace.sdk.interfs.IResultCallback;
 import com.sleepace.sdk.manager.CallbackData;
+import com.sleepace.sdk.sa1001_wan.constants.AromaOptMode;
+import com.sleepace.sdk.sa1001_wan.constants.AromaSpeed;
 import com.sleepace.sdk.sa1001_wan.domain.WorkStatus;
-import com.sleepace.sdk.sa1001_wan.interfs.IAromaManager;
-import com.sleepace.sdk.sa1001_wan.interfs.IAromaManager.AromaOptMode;
-import com.sleepace.sdk.sa1001_wan.interfs.IAromaManager.AromaSpeed;
+import com.sleepace.sdk.sa1001_wan.interfs.WorkStatusListener;
 import com.sleepace.sdk.util.SdkLog;
 
 import android.os.Bundle;
@@ -62,7 +60,7 @@ public class AromaFragment extends BaseFragment {
 	
 	private WorkStatusListener workStatusListener = new WorkStatusListener() {
 		@Override
-		public void onWorkStatusChanged(LightWorkStatus workStatus) {
+		public void onWorkStatusChanged(WorkStatus workStatus) {
 			// TODO Auto-generated method stub
 //			SdkLog.log(TAG+" onWorkStatusChanged:" + workStatus);
 			initBtnState((WorkStatus)workStatus);
@@ -76,11 +74,11 @@ public class AromaFragment extends BaseFragment {
 			Object tag = group.getTag();
 			AromaSpeed speed = AromaSpeed.CLOSE;
 			if(checkedId == R.id.rb_fast){
-				speed = IAromaManager.AromaSpeed.FAST;
+				speed = AromaSpeed.FAST;
 			}else if(checkedId == R.id.rb_mid){
-				speed = IAromaManager.AromaSpeed.COMMON;
+				speed = AromaSpeed.COMMON;
 			}else if(checkedId == R.id.rb_slow){
-				speed = IAromaManager.AromaSpeed.SLOW;
+				speed = AromaSpeed.SLOW;
 			}
 			
 			SdkLog.log(TAG+" aroma onCheckedChanged tag:"+tag+",checkedId:"+checkedId+",speed:" + speed);

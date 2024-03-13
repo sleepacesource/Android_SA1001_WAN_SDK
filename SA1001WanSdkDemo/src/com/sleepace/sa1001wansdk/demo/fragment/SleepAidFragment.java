@@ -9,18 +9,16 @@ import com.sleepace.sa1001wansdk.demo.util.ActivityUtil;
 import com.sleepace.sa1001wansdk.demo.util.Utils;
 import com.sleepace.sa1001wansdk.demo.view.SelectValueDialog;
 import com.sleepace.sa1001wansdk.demo.view.SelectValueDialog.ValueSelectedListener;
-import com.sleepace.sdk.core.light.domain.LightWorkStatus;
-import com.sleepace.sdk.core.light.domain.SPLight;
-import com.sleepace.sdk.core.light.domain.SPMusic;
-import com.sleepace.sdk.core.light.interfs.IMusicManager.CycleMode;
-import com.sleepace.sdk.core.light.interfs.WorkStatusListener;
 import com.sleepace.sdk.interfs.IResultCallback;
 import com.sleepace.sdk.manager.CallbackData;
+import com.sleepace.sdk.sa1001_wan.constants.AromaOptMode;
+import com.sleepace.sdk.sa1001_wan.constants.AromaSpeed;
+import com.sleepace.sdk.sa1001_wan.constants.CycleMode;
+import com.sleepace.sdk.sa1001_wan.domain.SPLight;
+import com.sleepace.sdk.sa1001_wan.domain.SPMusic;
 import com.sleepace.sdk.sa1001_wan.domain.SleepAidConfig;
 import com.sleepace.sdk.sa1001_wan.domain.WorkStatus;
-import com.sleepace.sdk.sa1001_wan.interfs.IAromaManager;
-import com.sleepace.sdk.sa1001_wan.interfs.IAromaManager.AromaOptMode;
-import com.sleepace.sdk.sa1001_wan.interfs.IAromaManager.AromaSpeed;
+import com.sleepace.sdk.sa1001_wan.interfs.WorkStatusListener;
 import com.sleepace.sdk.util.SdkLog;
 
 import android.app.Activity;
@@ -174,13 +172,13 @@ public class SleepAidFragment extends BaseFragment {
 									// TODO Auto-generated method stub
 									etG.setText(String.valueOf(aidInfo.getColorG()));
 									etBrightness.setText(String.valueOf(aidInfo.getBrightness()));
-									if(aidInfo.getAromaSpeed() == IAromaManager.AromaSpeed.CLOSE.getValue()) {
+									if(aidInfo.getAromaSpeed() == AromaSpeed.CLOSE.getValue()) {
 										rbClose.setChecked(true);
-									}else if(aidInfo.getAromaSpeed() == IAromaManager.AromaSpeed.FAST.getValue()){
+									}else if(aidInfo.getAromaSpeed() == AromaSpeed.FAST.getValue()){
 										rbFast.setChecked(true);
-									}else if(aidInfo.getAromaSpeed() == IAromaManager.AromaSpeed.COMMON.getValue()){
+									}else if(aidInfo.getAromaSpeed() == AromaSpeed.COMMON.getValue()){
 										rbMid.setChecked(true);
-									}else if(aidInfo.getAromaSpeed() == IAromaManager.AromaSpeed.SLOW.getValue()){
+									}else if(aidInfo.getAromaSpeed() == AromaSpeed.SLOW.getValue()){
 										rbSlow.setChecked(true);
 									}
 									initSleepAidDurationView();
@@ -205,7 +203,7 @@ public class SleepAidFragment extends BaseFragment {
 	
 	private WorkStatusListener workStatusListener = new WorkStatusListener() {
 		@Override
-		public void onWorkStatusChanged(final LightWorkStatus workStatus) {
+		public void onWorkStatusChanged(final WorkStatus workStatus) {
 			// TODO Auto-generated method stub
 			mActivity.runOnUiThread(new Runnable() {
 				@Override
@@ -308,13 +306,13 @@ public class SleepAidFragment extends BaseFragment {
 			
 			AromaSpeed speed = AromaSpeed.COMMON;
 			if(checkedId == R.id.rb_fast){
-				speed = IAromaManager.AromaSpeed.FAST;
+				speed = AromaSpeed.FAST;
 			}else if(checkedId == R.id.rb_mid){
-				speed = IAromaManager.AromaSpeed.COMMON;
+				speed = AromaSpeed.COMMON;
 			}else if(checkedId == R.id.rb_slow){
-				speed = IAromaManager.AromaSpeed.SLOW;
+				speed = AromaSpeed.SLOW;
 			}else if(checkedId == R.id.rb_close){
-				speed = IAromaManager.AromaSpeed.CLOSE;
+				speed = AromaSpeed.CLOSE;
 			}
 			
 			aidInfo.setAromaSpeed(speed.getValue());

@@ -4,7 +4,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="18"
+        android:minSdkVersion="23"
         android:targetSdkVersion="28" />
     
 	<uses-permission android:name="android.permission.INTERNET" />
@@ -21,6 +21,7 @@
         >
         
          <activity
+            android:exported="true"
             android:name="com.sleepace.sa1001wansdk.demo.MainActivity"
             android:screenOrientation="portrait" ><!-- SplashActivity --><!-- MainActivity -->
             <intent-filter>

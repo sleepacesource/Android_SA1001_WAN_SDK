@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sleepace.sa1001wansdk.demo.util.Utils;
-import com.sleepace.sdk.core.light.domain.SPMusic;
-import com.sleepace.sdk.core.light.interfs.IMusicManager.CycleMode;
 import com.sleepace.sdk.interfs.IResultCallback;
 import com.sleepace.sdk.manager.CallbackData;
 import com.sleepace.sdk.manager.ble.BleHelper;
+import com.sleepace.sdk.sa1001_wan.constants.CycleMode;
+import com.sleepace.sdk.sa1001_wan.domain.SPMusic;
 
 import android.content.Intent;
 import android.os.Bundle;

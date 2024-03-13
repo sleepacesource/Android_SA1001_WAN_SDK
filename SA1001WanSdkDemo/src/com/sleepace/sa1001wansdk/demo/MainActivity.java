@@ -3,10 +3,9 @@ package com.sleepace.sa1001wansdk.demo;
 import com.sleepace.sa1001wansdk.demo.fragment.ControlFragment;
 import com.sleepace.sa1001wansdk.demo.fragment.LoginFragment;
 import com.sleepace.sa1001wansdk.demo.fragment.SettingFragment;
-import com.sleepace.sdk.core.light.domain.LightWorkStatus;
-import com.sleepace.sdk.core.light.interfs.OnlineStateListener;
-import com.sleepace.sdk.core.light.interfs.WorkStatusListener;
 import com.sleepace.sdk.sa1001_wan.domain.WorkStatus;
+import com.sleepace.sdk.sa1001_wan.interfs.OnlineStateListener;
+import com.sleepace.sdk.sa1001_wan.interfs.WorkStatusListener;
 import com.sleepace.sdk.util.SdkLog;
 import com.sleepace.sdk.wifidevice.bean.DeviceInfo;
 
@@ -147,7 +146,7 @@ public class MainActivity extends BaseActivity {
 	
 	private WorkStatusListener workStatusListener = new WorkStatusListener() {
 		@Override
-		public void onWorkStatusChanged(LightWorkStatus workStatus) {
+		public void onWorkStatusChanged(WorkStatus workStatus) {
 			// TODO Auto-generated method stub
 			SdkLog.log(TAG+" onWorkStatusChanged:" + workStatus);
 			MainActivity.this.workStatus = (WorkStatus) workStatus;

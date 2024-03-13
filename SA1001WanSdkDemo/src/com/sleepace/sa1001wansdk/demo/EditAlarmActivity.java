@@ -8,8 +8,8 @@ import com.sleepace.sa1001wansdk.demo.view.SelectValueDialog;
 import com.sleepace.sa1001wansdk.demo.view.SelectValueDialog.ValueSelectedListener;
 import com.sleepace.sdk.interfs.IResultCallback;
 import com.sleepace.sdk.manager.CallbackData;
+import com.sleepace.sdk.sa1001_wan.constants.AromaSpeed;
 import com.sleepace.sdk.sa1001_wan.domain.AromaAlarm;
-import com.sleepace.sdk.sa1001_wan.interfs.IAromaManager.AromaSpeed;
 import com.sleepace.sdk.util.SdkLog;
 
 import android.app.Activity;

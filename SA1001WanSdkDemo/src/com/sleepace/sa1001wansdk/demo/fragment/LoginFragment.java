@@ -6,16 +6,14 @@ import java.util.List;
 import com.sleepace.sa1001wansdk.demo.MainActivity;
 import com.sleepace.sa1001wansdk.demo.R;
 import com.sleepace.sa1001wansdk.demo.util.ActivityUtil;
-import com.sleepace.sdk.core.light.domain.SPTimeInfo;
-import com.sleepace.sdk.core.light.domain.UpgradeStatus;
 import com.sleepace.sdk.interfs.IDeviceManager;
 import com.sleepace.sdk.interfs.IResultCallback;
 import com.sleepace.sdk.manager.CallbackData;
 import com.sleepace.sdk.manager.DeviceType;
+import com.sleepace.sdk.sa1001_wan.CallbackType;
 import com.sleepace.sdk.sa1001_wan.SA1001Helper;
-import com.sleepace.sdk.sa1001_wan.domain.SleepAidConfig;
+import com.sleepace.sdk.sa1001_wan.domain.UpgradeStatus;
 import com.sleepace.sdk.util.SdkLog;
-import com.sleepace.sdk.util.TimeUtil;
 import com.sleepace.sdk.wifidevice.WiFiDeviceSdkHelper;
 import com.sleepace.sdk.wifidevice.bean.DeviceInfo;
 import com.sleepace.sdk.wifidevice.bean.UpgradeInfo;
@@ -103,19 +101,21 @@ public class LoginFragment extends BaseFragment {
 		// TODO Auto-generated method stub
 		super.onResume();
 //		String serverHost = mSetting.getString("serverHost", "http://120.24.169.204:8091");
-//		String serverHost = mSetting.getString("serverHost", "http://172.14.0.65:8082");
-		String serverHost = mSetting.getString("serverHost", "http://120.24.68.136:8091");
+//		String serverHost = mSetting.getString("serverHost", "http://120.24.68.136:8091");
+//		String serverHost = mSetting.getString("serverHost", "https://api.sleepbytes.com");
+		String serverHost = mSetting.getString("serverHost", "");
 		etServerAddress.setText(serverHost);
 //		String token = mSetting.getString("token", "wangyong");
-		String token = mSetting.getString("token", "JEyze7l6jpr4");
+		String token = mSetting.getString("token", "");
 		etToken.setText(token);
 //		String channelId = mSetting.getString("channelId", "13700");
-		String channelId = mSetting.getString("channelId", "54500");
+//		String channelId = mSetting.getString("channelId", "54500");
+		String channelId = mSetting.getString("channelId", "");
 		etChannelId.setText(channelId);
-		String deviceId = mSetting.getString("deviceId", "ncew4y78xcg21"); //SA11166000005
+		String deviceId = mSetting.getString("deviceId", ""); //SA11166000005
 		etDeviceId.setText(deviceId);
-		String version = mSetting.getString("version", "1.63");
-//		String version = mSetting.getString("version", "");
+		String version = mSetting.getString("version", "");
+//		String version = mSetting.getString("version", "1.63");
 		etVersion.setText(version);
 	}
 
@@ -209,17 +209,17 @@ public class LoginFragment extends BaseFragment {
 			}
 			checkUpdate(deviceId);
 			
-			SPTimeInfo time = new SPTimeInfo();
-			time.setTimestamp((int) (System.currentTimeMillis() / 1000));
-			time.setTimezone(TimeUtil.getTimeZoneSecond());
-			time.setTimeStyle((byte) 24); //12小时制，24小时制
-			mHelper.syncTime(deviceId, time, new IResultCallback() {
-				@Override
-				public void onResultCallback(CallbackData cd) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
+//			SPTimeInfo time = new SPTimeInfo();
+//			time.setTimestamp((int) (System.currentTimeMillis() / 1000));
+//			time.setTimezone(TimeUtil.getTimeZoneSecond());
+//			time.setTimeStyle((byte) 24); //12小时制，24小时制
+//			mHelper.syncTime(deviceId, time, new IResultCallback() {
+//				@Override
+//				public void onResultCallback(CallbackData cd) {
+//					// TODO Auto-generated method stub
+//					
+//				}
+//			});
 		} else if (v == btnBindDevice) {
 			progressDialog.show();
 			final String deviceId = etDeviceId.getText().toString().trim();
@@ -280,9 +280,22 @@ public class LoginFragment extends BaseFragment {
 			if(MainActivity.device != null) {
 				mHelper.queryDeviceOnlineState((short)MainActivity.device.getDeviceType(), deviceId, new IResultCallback<Byte>() {
 					@Override
-					public void onResultCallback(CallbackData<Byte> cd) {
+					public void onResultCallback(final CallbackData<Byte> cd) {
 						// TODO Auto-generated method stub
 						SdkLog.log(TAG + " queryDeviceOnlineState cd:" + cd);
+						mActivity.runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								// TODO Auto-generated method stub
+								if(cd.isSuccess()) {
+									String tips = "device online";
+									if(cd.getResult() == 0) {
+										tips = "device offline";
+									}
+									Toast.makeText(mActivity, tips, Toast.LENGTH_LONG).show();
+								}
+							}
+						});
 					}
 				});
 			}
@@ -392,24 +405,21 @@ public class LoginFragment extends BaseFragment {
 												@Override
 												public void run() {
 													// TODO Auto-generated method stub
-													short callbackType = cd.getCallbackType();
-													if(callbackType == IDeviceManager.METHOD_UPGRADE) {
+													String callbackType = cd.getCallbackType();
+													if(callbackType == CallbackType.DEVICE_UPGRADE) {
 														if (!cd.isSuccess()) {
 															upgradeDialog.dismiss();
 															Toast.makeText(mActivity, R.string.up_failed, Toast.LENGTH_SHORT).show();
-														}
-													}else if(callbackType == IDeviceManager.METHOD_UPGRADE_PROGRESS) {
-														if (cd.isSuccess()) {
-															UpgradeStatus upgradeStatus = cd.getResult();
-															int progress = upgradeStatus.getProgress();
-															upgradeDialog.setProgress(progress);
-															if (progress == 100) {
-																upgradeDialog.dismiss();
-																Toast.makeText(mActivity, R.string.up_success, Toast.LENGTH_SHORT).show();
-															}
 														}else {
-															upgradeDialog.dismiss();
-															Toast.makeText(mActivity, R.string.up_failed, Toast.LENGTH_SHORT).show();
+															UpgradeStatus upgradeStatus = cd.getResult();
+															if(upgradeStatus != null) {
+																int progress = upgradeStatus.getProgress();
+																upgradeDialog.setProgress(progress);
+																if (progress == 100) {
+																	upgradeDialog.dismiss();
+																	Toast.makeText(mActivity, R.string.up_success, Toast.LENGTH_SHORT).show();
+																}
+															}
 														}
 													}
 												}
@@ -417,7 +427,6 @@ public class LoginFragment extends BaseFragment {
 										}
 									}
 								});
-								
 							}else {
 								upgradeDialog.dismiss();
 							}
